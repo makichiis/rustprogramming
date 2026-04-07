@@ -1,9 +1,8 @@
-Part I
-"Introduction to Concurrency"
+# Part I - Introduction to Concurrency
 
 Example:
-3 100 banknote
-3 people
+- 3 100 banknote
+- 3 people
 
 Don't communicate with each other.
 Move to pick up.
@@ -15,9 +14,9 @@ or could be slower, if one person will take one note at a time
 
 Simple, basic, but accurate image of concurrency programming.
 
-Introduction:
+## Introduction
 
-=> New abstraction: Thread
+### New abstraction: Thread
 Our program will have many point of execution
 
 Before it was one single thread.
@@ -25,9 +24,9 @@ Before it was one single thread.
 Each thread is like a separate process.
 Key idea: It shares the same address space and the same data
 
-=> State of the single thread:
+### State of the single thread
 
-Program Counter
+#### Program Counter
 Private registers(context switch still works)
 
 [Single Process:
@@ -35,7 +34,7 @@ Private registers(context switch still works)
 "Thread2",
 "Thread3",]
 
-Distinction with processes.
+#### Distinction with processes.
 All threads share the same address space as a parent process
 
 In addition, in order to distinguish threads, each one 
@@ -56,7 +55,7 @@ Stack3]
 Stack becomes thread-local storage and keeps
 all variable, parameters and return values
 
-Why use Threads?
+### Why use Threads?
 
 1) Parallelism
 Imagine you need to process 10000 arrays.
@@ -82,10 +81,10 @@ So instead of relinquishing CPU on every IO operation, you want to have multiple
 
 
 => Bad example
+```rs
 use std::thread;
 use std::time::Duration;
 
-'''
 fn main() {
     thread::spawn(|| {
         for i in 1..10 {
@@ -99,9 +98,10 @@ fn main() {
         thread::sleep(Duration::from_millis(1));
     }
 }
+```
 
-'''
 => Correct Example
+```rs
 use std::thread;
 use std::time::Duration;
 
@@ -120,9 +120,9 @@ fn main() {
 
     handle.join().unwrap();
 }
-'''
+```
 
-Problems:
+### Problems
 Shared data.
 So we observed that data which lives on the heap will be shared by all threads.
 And here starts all the problems.
@@ -131,8 +131,8 @@ Namely it's called Data Race - Race Condition.
 In Rust it does not exist. Bu we need to discuss.
 To understand things at depth.
 
-=> Uncontrolled Scheduling.
-a = a + 1 
+### Uncontrolled Scheduling.
+`a = a + 1`
 
 1) move value of a to register // load
 2) perform adding one (bad scenario arises when time interrupt occurs , exactly at this moment) // update
@@ -157,7 +157,7 @@ So it's a two operation and you want the execute either both or none.
 
 And everything we want to achieve in multithreaded programs is to access critical sections in synchronised and controlled maner.
 
-Condition Variables
+### Condition Variables
 So another idea.
 If we want to synchronize our threads.
 Let's say we cannot continue of execution of one thread
@@ -166,10 +166,10 @@ till previous did not finish.
 There is a need for sleeping and waking aprropriate threads
 Solution is Condition Variables
 
-Example problem
+## Example problem
 https://leetcode.com/problems/print-zero-even-odd/
 
-Key Takeways:
+## Key Takeways
 
 => A critical section
 => Race condition
