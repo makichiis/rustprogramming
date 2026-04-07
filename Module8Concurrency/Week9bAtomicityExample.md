@@ -1,3 +1,4 @@
+```rs
 use std::sync::atomic::{AtomicI32, Ordering};
 use rand::Rng;
 use std::sync::Arc;
@@ -191,3 +192,4 @@ fn main() {
     println!("Final balance of source: {}", source.balance.load(Ordering::SeqCst));
     println!("Final balance of destination: {}", destination.balance.load(Ordering::SeqCst));
 }
+```
